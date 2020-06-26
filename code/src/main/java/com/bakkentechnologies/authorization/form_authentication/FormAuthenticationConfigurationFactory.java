@@ -17,11 +17,9 @@ import spark.TemplateEngine;
 
 
 public class FormAuthenticationConfigurationFactory implements ConfigFactory {
-    private final String salt;
     private final TemplateEngine templateEngine;
 
-    public FormAuthenticationConfigurationFactory(final String salt, final TemplateEngine templateEngine) {
-        this.salt = salt;
+    public FormAuthenticationConfigurationFactory(final TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
     }
 

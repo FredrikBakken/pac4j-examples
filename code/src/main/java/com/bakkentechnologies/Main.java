@@ -1,6 +1,7 @@
 package com.bakkentechnologies;
 
 import com.bakkentechnologies.authorization.form_authentication.FormAuthenticationConfigurationFactory;
+import com.bakkentechnologies.authorization.kerberos_authentication.KerberosAuthenticationConfigurationFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,14 +27,14 @@ import static spark.Spark.*;
 
 
 public class Main {
-    private final static String JWT_SALT = "12345678901234567890123456789012";
     private final static Logger logger = LoggerFactory.getLogger(Main.class);
     private final static MustacheTemplateEngine templateEngine = new MustacheTemplateEngine();
 
     public static void main(String[] args) {
         port(8080);
 
-        final Config config = new FormAuthenticationConfigurationFactory(JWT_SALT, templateEngine).build();
+        final Config config = new FormAuthenticationConfigurationFactory(templateEngine).build();
+        final Config kerberosConfig = new KerberosAuthenticationConfigurationFactory(templateEngine).build();
 
         get("/", Main::index, templateEngine);
         
