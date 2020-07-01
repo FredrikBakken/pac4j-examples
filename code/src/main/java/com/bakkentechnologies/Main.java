@@ -6,16 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.pac4j.core.client.Client;
 import org.pac4j.core.config.Config;
-import org.pac4j.core.exception.http.HttpAction;
 import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.core.profile.ProfileManager;
-import org.pac4j.core.util.Pac4jConstants;
 import org.pac4j.http.client.indirect.FormClient;
-import org.pac4j.kerberos.client.direct.DirectKerberosClient;
-import org.pac4j.kerberos.client.indirect.IndirectKerberosClient;
 
+import org.pac4j.kerberos.client.indirect.IndirectKerberosClient;
 import org.pac4j.sparkjava.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +41,7 @@ public class Main {
 		//callback.setRenewSession(false);
 		get("/callback", callback);
 		post("/callback", callback);
-        
+
 		before("/form", new SecurityFilter(config, "FormClient"));
 		before("/direct", new SecurityFilter(config, "DirectKerberosClient"));
         before("/indirect", new SecurityFilter(config, "IndirectKerberosClient"));
@@ -55,8 +51,11 @@ public class Main {
 		get("/direct", Main::protectedIndex, templateEngine);
         get("/indirect", Main::protectedIndex, templateEngine);
         get("/protected", Main::protectedIndex, templateEngine);
-        
-        get("/loginForm", (rq, rs) -> form(config), templateEngine);
+
+		get("/loginForm", (rq, rs) -> form(config), templateEngine);
+		get("/indirectKerberos", (rq, rs) -> indirect(config), templateEngine);
+
+		redirect.post("", "");
 
         final LogoutRoute localLogout = new LogoutRoute(config, "/?defaulturlafterlogout");
 		localLogout.setDestroySession(true);
@@ -96,6 +95,13 @@ public class Main {
 		map.put("callbackUrl", formClient.getCallbackUrl());
 		return new ModelAndView(map, "loginForm.mustache");
     }
+
+	private static ModelAndView indirect(final Config config) {
+		final Map map = new HashMap();
+		final IndirectKerberosClient indirectKerberosClient = config.getClients().findClient(IndirectKerberosClient.class).get();
+		map.put("callbackUrl", indirectKerberosClient.getCallbackUrl());
+		return new ModelAndView(map, "indirectKerberos.mustache");
+	}
 
 	private static ModelAndView protectedIndex(final Request request, final Response response) {
 		final Map map = new HashMap();

@@ -4,7 +4,7 @@ A repository for performing sandbox testing of the pac4j security framework for 
 ## Requirements
 The project requires that [Docker](https://www.docker.com/) is installed and it is also *recommended* to have [Postman](https://www.postman.com/) installed.
 
-## Setting Up HTTPS with SSL/TLS
+## Secure Transmission with HTTPS-Encryption
 The Spark Java documentation provides good documentations for how to set up HTTPS over SSL/TLS: [http://sparkjava.com/documentation#embedded-web-server](http://sparkjava.com/documentation#embedded-web-server). It also references to the Oracle pages for how to create a KeyStore: [https://docs.oracle.com/cd/E19509-01/820-3503/ggfen/index.html](https://docs.oracle.com/cd/E19509-01/820-3503/ggfen/index.html).
 
 In this project, the following has been done to achieve HTTPS encryption over SSL/TLS:

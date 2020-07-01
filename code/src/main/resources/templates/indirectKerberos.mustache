@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge, chrome=1"/>
+        <script>
+        "use strict";
+        function submitForm(oFormElement)
+        {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/callback?client_name=IndirectKerberosClient', true);
+            xhr.setRequestHeader("Authorization", "Negotiate VGVzdAELZXJiZXJvcw==");
+            xhr.onload = function () {
+                console.log(this.responseText);
+            };
+            xhr.send();
+        }
+        </script>
+    </head>
+
+    <body>
+        <form method="post" action="/callback?client_name=IndirectKerberosClient" onsubmit="return submitForm(this);">
+            <input type="hidden" value="person"   name="user" />
+            <input type="hidden" value="password" name="pwd" />
+            <input type="hidden" value="place"    name="organization" />
+            <input type="hidden" value="key"      name="requiredkey" />
+            <input type="submit" value="post request"/>
+        </form>
+    </body>
+</html>
+
+
+<!--
+<form action="/callback?client_name=IndirectKerberosClient" method="POST">
+    <input type="text" name="username" value="" />
+    <p />
+    <input type="password" name="password" value="" />
+    <p />
+    <input type="submit" name="submit" value="Submit" />
+</form>
+-->

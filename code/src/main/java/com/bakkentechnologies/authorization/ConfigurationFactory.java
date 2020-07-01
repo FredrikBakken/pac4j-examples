@@ -45,7 +45,7 @@ public class ConfigurationFactory implements ConfigFactory {
 
         // Initialize IndirectKerberosClient
         final IndirectKerberosClient indirectClient = new IndirectKerberosClient(new KerberosAuthenticator(krbValidator));
-        indirectClient.setCallbackUrl("/indirect");
+        indirectClient.setCallbackUrl("/indirectKerberos");
 
         // Initialize FormClient
         final FormClient formClient = new FormClient("/loginForm", new SimpleTestUsernamePasswordAuthenticator());
