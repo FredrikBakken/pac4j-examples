@@ -1,7 +1,6 @@
 package com.bakkentechnologies;
 
-import com.bakkentechnologies.authorization.form_authentication.FormAuthenticationConfigurationFactory;
-import com.bakkentechnologies.authorization.kerberos_authentication.KerberosAuthenticationConfigurationFactory;
+import com.bakkentechnologies.authorization.ConfigurationFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,11 +32,12 @@ public class Main {
     private final static MustacheTemplateEngine templateEngine = new MustacheTemplateEngine();
 
     public static void main(String[] args) {
+		// Initialize port and HTTPS-encryption
 		port(4567);
 		secure("deploy/keystore.jks", "secretkey", null, null);
 
-        final Config config = new FormAuthenticationConfigurationFactory(templateEngine).build();
-        final Config kerberosConfig = new KerberosAuthenticationConfigurationFactory(templateEngine).build();
+		// Load the authentication configuration factory
+        final Config config = new ConfigurationFactory(templateEngine).build();
 
         get("/", Main::index, templateEngine);
         
@@ -46,10 +46,14 @@ public class Main {
 		get("/callback", callback);
 		post("/callback", callback);
         
-        before("/form", new SecurityFilter(config, "FormClient"));
+		before("/form", new SecurityFilter(config, "FormClient"));
+		before("/direct", new SecurityFilter(config, "DirectKerberosClient"));
+        before("/indirect", new SecurityFilter(config, "IndirectKerberosClient"));
 		before("/protected", new SecurityFilter(config, null));
 
 		get("/form", Main::protectedIndex, templateEngine);
+		get("/direct", Main::protectedIndex, templateEngine);
+        get("/indirect", Main::protectedIndex, templateEngine);
         get("/protected", Main::protectedIndex, templateEngine);
         
         get("/loginForm", (rq, rs) -> form(config), templateEngine);

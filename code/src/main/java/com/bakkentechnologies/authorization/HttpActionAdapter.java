@@ -1,10 +1,13 @@
 package com.bakkentechnologies.authorization;
 
+import java.util.HashMap;
+
 import org.pac4j.core.context.HttpConstants;
 import org.pac4j.core.exception.TechnicalException;
 import org.pac4j.core.exception.http.HttpAction;
 import org.pac4j.sparkjava.SparkHttpActionAdapter;
 import org.pac4j.sparkjava.SparkWebContext;
+
 import spark.ModelAndView;
 import spark.TemplateEngine;
 
@@ -17,7 +20,7 @@ public class HttpActionAdapter extends SparkHttpActionAdapter {
     public HttpActionAdapter(final TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
     }
-
+    
     @Override
     public Object adapt(final HttpAction action, final SparkWebContext context) {
         if (action != null) {

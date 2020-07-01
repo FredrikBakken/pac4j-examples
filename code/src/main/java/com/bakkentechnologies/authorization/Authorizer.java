@@ -9,7 +9,6 @@ import java.util.List;
 
 
 public class Authorizer extends ProfileAuthorizer<CommonProfile> {
-
     @Override
     public boolean isAuthorized(final WebContext context, final List<CommonProfile> profiles) {
         return isAnyAuthorized(context, profiles);
