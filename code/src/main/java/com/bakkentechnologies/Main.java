@@ -14,6 +14,8 @@ import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.core.profile.ProfileManager;
 import org.pac4j.core.util.Pac4jConstants;
 import org.pac4j.http.client.indirect.FormClient;
+import org.pac4j.kerberos.client.direct.DirectKerberosClient;
+import org.pac4j.kerberos.client.indirect.IndirectKerberosClient;
 
 import org.pac4j.sparkjava.*;
 import org.slf4j.Logger;
@@ -31,7 +33,8 @@ public class Main {
     private final static MustacheTemplateEngine templateEngine = new MustacheTemplateEngine();
 
     public static void main(String[] args) {
-        port(8080);
+		port(4567);
+		secure("deploy/keystore.jks", "secretkey", null, null);
 
         final Config config = new FormAuthenticationConfigurationFactory(templateEngine).build();
         final Config kerberosConfig = new KerberosAuthenticationConfigurationFactory(templateEngine).build();
@@ -43,12 +46,13 @@ public class Main {
 		get("/callback", callback);
 		post("/callback", callback);
         
-		before("/form", new SecurityFilter(config, "FormClient"));
+        before("/form", new SecurityFilter(config, "FormClient"));
 		before("/protected", new SecurityFilter(config, null));
 
 		get("/form", Main::protectedIndex, templateEngine);
-		get("/protected", Main::protectedIndex, templateEngine);
-		get("/loginForm", (rq, rs) -> form(config), templateEngine);
+        get("/protected", Main::protectedIndex, templateEngine);
+        
+        get("/loginForm", (rq, rs) -> form(config), templateEngine);
 
         final LogoutRoute localLogout = new LogoutRoute(config, "/?defaulturlafterlogout");
 		localLogout.setDestroySession(true);
@@ -61,11 +65,6 @@ public class Main {
 		centralLogout.setCentralLogout(true);
 		centralLogout.setDestroySession(true);
 		get("/centralLogout", centralLogout);
-
-		/*before("/body", (request, response) -> {
-			logger.debug("before /body");
-		});*/
-		//before("/body", new SecurityFilter(config, "AnonymousClient"));
 
         before("/body", new SecurityFilter(config, "HeaderClient"));
 		post("/body", (request, response) -> {
@@ -92,7 +91,7 @@ public class Main {
 		final FormClient formClient = config.getClients().findClient(FormClient.class).get();
 		map.put("callbackUrl", formClient.getCallbackUrl());
 		return new ModelAndView(map, "loginForm.mustache");
-	}
+    }
 
 	private static ModelAndView protectedIndex(final Request request, final Response response) {
 		final Map map = new HashMap();
