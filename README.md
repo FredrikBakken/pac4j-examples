@@ -15,11 +15,13 @@ In this project, the following has been done to achieve HTTPS encryption over SS
 
 All pages will now require `https://` to be used.
 
+You will still get a warning about there not being a secure connection, since the certificate is not signed by a trusted entity (CA). Further details describing this process can be found here: [https://support.code42.com/Administrator/6/Configuring/Install_a_CA-signed_SSL_certificate_for_HTTPS_console_access](https://support.code42.com/Administrator/6/Configuring/Install_a_CA-signed_SSL_certificate_for_HTTPS_console_access).
+
 ### Transmission over HTTP vs HTTPS
 
 | HTTP | HTTPS |
 | ---- | ----- |
-| ![HTTP](https://github.com/FredrikBakken/sparkjava-pac4j-examples/blob/master/docs/assets/images/http.png?raw=true) | ![HTTPS](https://github.com/FredrikBakken/sparkjava-pac4j-examples/blob/master/docs/assets/images/https.png?raw=true) |
+| ![HTTP](https://github.com/FredrikBakken/sparkjava-pac4j-kerberos/blob/master/docs/assets/images/http.png?raw=true) | ![HTTPS](https://github.com/FredrikBakken/sparkjava-pac4j-kerberos/blob/master/docs/assets/images/https.png?raw=true) |
 
 
 ## Pac4j Kerberos
@@ -28,7 +30,7 @@ All pages will now require `https://` to be used.
 The implementation of Kerberos authentication with pac4j requires that the dependency `pac4j-kerberos` is installed. `mockito-core` is used in this case for sandbox testing purposes.
 
 ### Authorization Implementation
-The functionality implemented into this project was derived by combining the [KerberosClientTests.java](https://github.com/pac4j/pac4j/blob/master/pac4j-kerberos/src/test/java/org/pac4j/kerberos/client/direct/KerberosClientTests.java) file and the [spark-pac4j-demo](https://github.com/pac4j/spark-pac4j-demo) project. It can be studied in further detail under the [authorization](https://github.com/FredrikBakken/sparkjava-pac4j-examples/tree/master/code/src/main/java/com/bakkentechnologies/authorization) directory.
+The functionality implemented into this project was derived by combining the [KerberosClientTests.java](https://github.com/pac4j/pac4j/blob/master/pac4j-kerberos/src/test/java/org/pac4j/kerberos/client/direct/KerberosClientTests.java) file and the [spark-pac4j-demo](https://github.com/pac4j/spark-pac4j-demo) project. It can be studied in further detail under the [authorization](https://github.com/FredrikBakken/sparkjava-pac4j-kerberos/tree/master/code/src/main/java/com/bakkentechnologies/authorization) directory.
 
 In order to success authenticate with Kerberos, the *header* needs to have an `Authorization` key-value pair defined as follows: `{ "Authorization": "Negotiate <KERBEROS TICKET>" }`
 
@@ -39,10 +41,13 @@ For this example, any base64-value for a `KERBEROS TICKET` will result in succes
 #### DirectKerberosClient
 | Unauthorized | Authorized |
 | ------------ | ---------- |
-| ![Unauthorized DirectKerberosClient](https://raw.githubusercontent.com/FredrikBakken/sparkjava-pac4j-examples/master/docs/assets/images/direct_unauthorized.png) | ![Authorized DirectKerberosClient](https://raw.githubusercontent.com/FredrikBakken/sparkjava-pac4j-examples/master/docs/assets/images/direct_authorized.png) |
+| ![Unauthorized DirectKerberosClient](https://raw.githubusercontent.com/FredrikBakken/sparkjava-pac4j-kerberos/master/docs/assets/images/direct_unauthorized.png) | ![Authorized DirectKerberosClient](https://raw.githubusercontent.com/FredrikBakken/sparkjava-pac4j-kerberos/master/docs/assets/images/direct_authorized.png) |
 
 
 #### IndirectKerberosClient
 | Unauthorized | Authorized |
 | ------------ | ---------- |
-| ![Unauthorized IndirectKerberosClient](https://raw.githubusercontent.com/FredrikBakken/sparkjava-pac4j-examples/master/docs/assets/images/indirect_unauthorized.png) | ![Authorized IndirectKerberosClient](https://raw.githubusercontent.com/FredrikBakken/sparkjava-pac4j-examples/master/docs/assets/images/indirect_authorized.png) |
+| ![Unauthorized IndirectKerberosClient](https://raw.githubusercontent.com/FredrikBakken/sparkjava-pac4j-kerberos/master/docs/assets/images/indirect_unauthorized.png) | ![Authorized IndirectKerberosClient](https://raw.githubusercontent.com/FredrikBakken/sparkjava-pac4j-kerberos/master/docs/assets/images/indirect_authorized.png) |
+
+## Application Deployment
+The current example is just a simple and local sandbox test, without any connection to a running KDC with validation against a Kerberos keytab file. In order to implement this functionality, the [ConfigurationFactory.java](https://github.com/FredrikBakken/sparkjava-pac4j-kerberos/blob/master/code/src/main/java/com/bakkentechnologies/authorization/ConfigurationFactory.java) (lines 32-42) has to be updated to use the `SunJaasKerberosTicketValidator`, as described in the [pac4j Kerberos documentation](https://www.pac4j.org/docs/clients/kerberos.html).
