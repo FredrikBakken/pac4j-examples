@@ -2,7 +2,7 @@
 The motivation behind this project is to create an open-source example for how to use the [pac4j-kerberos](https://www.pac4j.org/docs/clients/kerberos.html) library with the [Spark Java Framework](http://sparkjava.com/) (not to be confused with [Apache Spark](http://spark.apache.org/)), and then strengthening the security by adding HTTPS-encryption to all routes.
 
 ## Requirements
-The project requires that [Docker](https://www.docker.com/) is installed and it is also *recommended* to have [Postman](https://www.postman.com/) installed for the testing.
+The project requires that you either have [Docker](https://www.docker.com/) installed or [Java JDK 8](https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html) and [Maven](https://maven.apache.org/) installed, and [Postman](https://www.postman.com/) is *recommended* for the testing.
 
 ## Secure Transmission with HTTPS-Encryption
 The Spark Java documentation provides good documentations for how to set up HTTPS over SSL/TLS: [http://sparkjava.com/documentation#embedded-web-server](http://sparkjava.com/documentation#embedded-web-server). It also references to the Oracle pages for how to create a KeyStore: [https://docs.oracle.com/cd/E19509-01/820-3503/ggfen/index.html](https://docs.oracle.com/cd/E19509-01/820-3503/ggfen/index.html).
