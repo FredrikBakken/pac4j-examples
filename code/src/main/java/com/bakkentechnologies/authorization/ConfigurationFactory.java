@@ -1,8 +1,5 @@
 package com.bakkentechnologies.authorization;
 
-import com.bakkentechnologies.authorization.Authorizer;
-import com.bakkentechnologies.authorization.HttpActionAdapter;
-
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
 import org.pac4j.core.config.ConfigFactory;
@@ -24,7 +21,6 @@ import spark.TemplateEngine;
 
 public class ConfigurationFactory implements ConfigFactory {
     private final TemplateEngine templateEngine;
-
     public ConfigurationFactory(final TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
     }
@@ -34,10 +30,9 @@ public class ConfigurationFactory implements ConfigFactory {
     @Override
     public Config build(final Object... parameters) {
         // Define Kerberos validator
-        // TODO: Add validator here...
-        // https://www.pac4j.org/docs/clients/kerberos.html
+        // TODO: Add validator here, see https://www.pac4j.org/docs/clients/kerberos.html
 
-        // Temporary validator (TODO: Remove)
+        // Temporary validator (to be removed when actual validator is used)
         when(krbValidator.validateTicket(any())).thenReturn(new KerberosTicketValidation("fredrik", null, null, null));
 
         // Initialize DirectKerberosClient

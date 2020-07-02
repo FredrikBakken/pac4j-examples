@@ -1,5 +1,4 @@
-# Spark Java with pac4j Security
-A repository for performing sandbox testing of the pac4j security framework for Java.
+# Spark Java with pac4j Kerberos Authentication
 
 ## Requirements
 The project requires that [Docker](https://www.docker.com/) is installed and it is also *recommended* to have [Postman](https://www.postman.com/) installed.
@@ -20,3 +19,9 @@ All pages will now require `https://` to be used.
 | HTTP | HTTPS |
 | ---- | ----- |
 | ![HTTP](https://github.com/FredrikBakken/sparkjava-pac4j-examples/blob/master/docs/assets/images/http.png?raw=true) | ![HTTPS](https://github.com/FredrikBakken/sparkjava-pac4j-examples/blob/master/docs/assets/images/https.png?raw=true) |
+
+
+## Pac4j Kerberos
+
+### Dependencies
+The implementation of Kerberos authentication with pac4j requires that the dependency `pac4j-kerberos` is installed. `mockito-core` is used in this case for sandbox testing purposes.

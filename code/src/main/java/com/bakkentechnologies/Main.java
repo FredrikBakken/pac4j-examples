@@ -36,7 +36,7 @@ public class Main {
         final Config config = new ConfigurationFactory(templateEngine).build();
 
         get("/", Main::index, templateEngine);
-        
+
 		final CallbackRoute callback = new CallbackRoute(config, null, true);
 		//callback.setRenewSession(false);
 		get("/callback", callback);
@@ -54,8 +54,6 @@ public class Main {
 
 		get("/loginForm", (rq, rs) -> form(config), templateEngine);
 		get("/indirectKerberos", (rq, rs) -> indirect(config), templateEngine);
-
-		redirect.post("", "");
 
         final LogoutRoute localLogout = new LogoutRoute(config, "/?defaulturlafterlogout");
 		localLogout.setDestroySession(true);
