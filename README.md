@@ -14,3 +14,9 @@ In this project, the following has been done to achieve HTTPS encryption over SS
 4. The routes are then secured by adding `secure("deploy/keystore.jks", "secretkey", null, null);` to the `Main.java`. It is **important** to add this before any routes are defined.
 
 All pages will now require `https://` to be used.
+
+### Transmission over HTTP vs HTTPS
+
+| HTTP | HTTPS |
+| ---- | ----- |
+| ![HTTP](https://github.com/FredrikBakken/sparkjava-pac4j-examples/blob/master/docs/assets/images/http.png?raw=true) | ![HTTPS](https://github.com/FredrikBakken/sparkjava-pac4j-examples/blob/master/docs/assets/images/https.png?raw=true) |
