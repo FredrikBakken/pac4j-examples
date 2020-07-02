@@ -32,9 +32,9 @@ The implementation of Kerberos authentication with pac4j requires that the depen
 ### Authorization Implementation
 The functionality implemented into this project was derived by combining the [KerberosClientTests.java](https://github.com/pac4j/pac4j/blob/master/pac4j-kerberos/src/test/java/org/pac4j/kerberos/client/direct/KerberosClientTests.java) file and the [spark-pac4j-demo](https://github.com/pac4j/spark-pac4j-demo) project. It can be studied in further detail under the [authorization](https://github.com/FredrikBakken/sparkjava-pac4j-kerberos/tree/master/code/src/main/java/com/bakkentechnologies/authorization) directory.
 
-In order to success authenticate with Kerberos, the *header* needs to have an `Authorization` key-value pair defined as follows: `{ "Authorization": "Negotiate <KERBEROS TICKET>" }`
+In order to successfully authenticate with Kerberos, the *header* needs to have an `Authorization` key-value pair defined as follows: `{ "Authorization": "Negotiate <KERBEROS TICKET>" }`
 
-For this example, any base64-value for a `KERBEROS TICKET` will result in successful authentication. 
+For this example, any base64-value for a `KERBEROS TICKET` will result in successful authentication.
 
 ### Examples
 
@@ -50,4 +50,4 @@ For this example, any base64-value for a `KERBEROS TICKET` will result in succes
 | ![Unauthorized IndirectKerberosClient](https://raw.githubusercontent.com/FredrikBakken/sparkjava-pac4j-kerberos/master/docs/assets/images/indirect_unauthorized.png) | ![Authorized IndirectKerberosClient](https://raw.githubusercontent.com/FredrikBakken/sparkjava-pac4j-kerberos/master/docs/assets/images/indirect_authorized.png) |
 
 ## Application Deployment
-The current example is just a simple and local sandbox test, without any connection to a running KDC with validation against a Kerberos keytab file. In order to implement this functionality, the [ConfigurationFactory.java](https://github.com/FredrikBakken/sparkjava-pac4j-kerberos/blob/master/code/src/main/java/com/bakkentechnologies/authorization/ConfigurationFactory.java) (lines 32-42) has to be updated to use the `SunJaasKerberosTicketValidator`, as described in the [pac4j Kerberos documentation](https://www.pac4j.org/docs/clients/kerberos.html).
+The current example is just a simple and local sandbox test, without any connection to a running key distribution center (KDC) with validation towards a Kerberos principal and keytab file. In order to implement this functionality, the [ConfigurationFactory.java](https://github.com/FredrikBakken/sparkjava-pac4j-kerberos/blob/master/code/src/main/java/com/bakkentechnologies/authorization/ConfigurationFactory.java) (lines 32-42) has to be updated to use the `SunJaasKerberosTicketValidator`, as described in the [pac4j Kerberos documentation](https://www.pac4j.org/docs/clients/kerberos.html).
