@@ -1,11 +1,10 @@
 package com.bakkentechnologies.authorization;
 
+import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.pac4j.core.authorization.authorizer.ProfileAuthorizer;
 import org.pac4j.core.context.WebContext;
 import org.pac4j.core.profile.CommonProfile;
-
-import java.util.List;
 
 
 public class Authorizer extends ProfileAuthorizer<CommonProfile> {

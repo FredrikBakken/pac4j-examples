@@ -5,12 +5,10 @@ import com.bakkentechnologies.authorization.ConfigurationFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.pac4j.core.config.Config;
 import org.pac4j.core.profile.CommonProfile;
 import org.pac4j.core.profile.ProfileManager;
 import org.pac4j.http.client.indirect.FormClient;
-
 import org.pac4j.kerberos.client.indirect.IndirectKerberosClient;
 import org.pac4j.sparkjava.*;
 import org.slf4j.Logger;
