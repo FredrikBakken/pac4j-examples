@@ -1,7 +1,8 @@
 # Spark Java with pac4j Kerberos Authentication
+The motivation behind this project is to create an open-source example for how to use the [pac4j-kerberos](https://www.pac4j.org/docs/clients/kerberos.html) library with the [Spark Java Framework](http://sparkjava.com/) (not to be confused with [Apache Spark](http://spark.apache.org/)), and then strengthening the security by adding HTTPS-encryption to all routes.
 
 ## Requirements
-The project requires that [Docker](https://www.docker.com/) is installed and it is also *recommended* to have [Postman](https://www.postman.com/) installed.
+The project requires that [Docker](https://www.docker.com/) is installed and it is also *recommended* to have [Postman](https://www.postman.com/) installed for the testing.
 
 ## Secure Transmission with HTTPS-Encryption
 The Spark Java documentation provides good documentations for how to set up HTTPS over SSL/TLS: [http://sparkjava.com/documentation#embedded-web-server](http://sparkjava.com/documentation#embedded-web-server). It also references to the Oracle pages for how to create a KeyStore: [https://docs.oracle.com/cd/E19509-01/820-3503/ggfen/index.html](https://docs.oracle.com/cd/E19509-01/820-3503/ggfen/index.html).
@@ -25,3 +26,23 @@ All pages will now require `https://` to be used.
 
 ### Dependencies
 The implementation of Kerberos authentication with pac4j requires that the dependency `pac4j-kerberos` is installed. `mockito-core` is used in this case for sandbox testing purposes.
+
+### Authorization Implementation
+The functionality implemented into this project was derived by combining the [KerberosClientTests.java](https://github.com/pac4j/pac4j/blob/master/pac4j-kerberos/src/test/java/org/pac4j/kerberos/client/direct/KerberosClientTests.java) file and the [spark-pac4j-demo](https://github.com/pac4j/spark-pac4j-demo) project. It can be studied in further detail under the [authorization](https://github.com/FredrikBakken/sparkjava-pac4j-examples/tree/master/code/src/main/java/com/bakkentechnologies/authorization) directory.
+
+In order to success authenticate with Kerberos, the *header* needs to have an `Authorization` key-value pair defined as follows: `{ "Authorization": "Negotiate <KERBEROS TICKET>" }`
+
+For this example, any base64-value for a `KERBEROS TICKET` will result in successful authentication. 
+
+### Examples
+
+#### DirectKerberosClient
+| Unauthorized | Authorized |
+| ------------ | ---------- |
+| ![Unauthorized DirectKerberosClient](https://raw.githubusercontent.com/FredrikBakken/sparkjava-pac4j-examples/master/docs/assets/images/direct_unauthorized.png) | ![Authorized DirectKerberosClient](https://raw.githubusercontent.com/FredrikBakken/sparkjava-pac4j-examples/master/docs/assets/images/direct_authorized.png) |
+
+
+#### IndirectKerberosClient
+| Unauthorized | Authorized |
+| ------------ | ---------- |
+| ![Unauthorized IndirectKerberosClient](https://raw.githubusercontent.com/FredrikBakken/sparkjava-pac4j-examples/master/docs/assets/images/indirect_unauthorized.png) | ![Authorized IndirectKerberosClient](https://raw.githubusercontent.com/FredrikBakken/sparkjava-pac4j-examples/master/docs/assets/images/indirect_authorized.png) |
